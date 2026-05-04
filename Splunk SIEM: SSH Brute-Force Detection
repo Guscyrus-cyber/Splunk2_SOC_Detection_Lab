@@ -1,0 +1,15 @@
+Splunk SIEM: SSH Brute-Force Detection
+
+This lab demonstrates a complete SOC-level workflow using Splunk Enterprise to detect and analyze SSH brute-force attacks. 
+A Kali Linux machine was configured as the log source, where /var/log/auth.log was monitored and forwarded to Splunk using 
+the Splunk Universal Forwarder. The lab began by validating successful log ingestion and ensuring authentication events were 
+indexed and searchable.
+An attack simulation was performed using repeated failed SSH login attempts (ssh fakeuser@localhost), generating events such 
+as Invalid user, multiple Failed password attempts, and connection closure. These logs were analyzed in Splunk to reconstruct 
+the full attack timeline and identify key indicators, including the attacker IP (::1) and the targeted username (fakeuser).
+Using SPL queries, fields such as src_ip and user were extracted with rex, and statistical analysis (stats, bin) was applied to 
+correlate events and detect brute-force behavior based on frequency thresholds. Detection logic was validated by grouping failed 
+attempts within a time window and identifying repeated activity from a single source.
+The lab concluded with the creation of reports, alerts, and a SOC dashboard to visualize attack patterns, including failed logins 
+by IP, attack timelines, and targeted usernames. This provided a functional SIEM use case for real-time monitoring and detection of 
+SSH brute-force attacks.
